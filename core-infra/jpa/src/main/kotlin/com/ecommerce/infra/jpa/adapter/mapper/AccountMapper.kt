@@ -6,7 +6,7 @@ import com.ecommerce.infra.jpa.entity.AccountEntity
 object AccountMapper {
 
     fun toDomain(entity: AccountEntity): Account {
-        return Account.create(
+        return Account.reconstruct(
             id = entity.id,
             email = entity.email,
             password = entity.password,
@@ -16,9 +16,9 @@ object AccountMapper {
 
     fun toEntity(account: Account): AccountEntity {
         return AccountEntity(
-            email = account.email,
-            password = account.password,
-            name = account.name,
+            email = account.email.value,
+            password = account.password.value,
+            name = account.name.value,
         )
     }
 }

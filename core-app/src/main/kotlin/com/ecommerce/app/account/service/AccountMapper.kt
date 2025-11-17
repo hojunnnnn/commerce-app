@@ -7,8 +7,8 @@ object AccountMapper {
 
     fun toSignupResult(account: Account): SignupResult {
         return SignupResult(
-            email = account.email,
-            name = account.name,
+            email = account.email.value,
+            name = account.name.value,
         )
     }
 }

@@ -35,8 +35,8 @@ class SignupServiceTest {
 
         val result = signupService.signup(command)
 
-        assertThat(result.email).isEqualTo(account.email)
-        assertThat(result.name).isEqualTo(account.name)
+        assertThat(result.email).isEqualTo(account.email.value)
+        assertThat(result.name).isEqualTo(account.name.value)
 
         verify(exactly = 1) {
             accountRegistrationService.registerAccount(
