@@ -1,6 +1,7 @@
 package com.ecommerce.app.account.service
 
 import com.ecommerce.app.account.port.out.AccountRepository
+import com.ecommerce.app.account.service.exception.AccountEmailExistsException
 import com.ecommerce.app.auth.port.out.PasswordEncoder
 import com.ecommerce.domain.account.Account
 import io.mockk.every
@@ -44,7 +45,7 @@ class AccountRegistrationServiceTest {
         val rawPassword = "password123"
         every { accountRepository.existsByEmail(email) } returns true
 
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<AccountEmailExistsException> {
             accountRegistrationService.registerAccount(email, rawPassword, name)
         }
 

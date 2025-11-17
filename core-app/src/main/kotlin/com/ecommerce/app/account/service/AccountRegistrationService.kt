@@ -1,6 +1,7 @@
 package com.ecommerce.app.account.service
 
 import com.ecommerce.app.account.port.out.AccountRepository
+import com.ecommerce.app.account.service.exception.AccountEmailExistsException
 import com.ecommerce.app.auth.port.out.PasswordEncoder
 import com.ecommerce.domain.account.Account
 import org.springframework.stereotype.Service
@@ -27,7 +28,7 @@ class AccountRegistrationService(
 
     private fun validateUniqueEmail(email: String) {
         if (accountRepository.existsByEmail(email)) {
-            throw IllegalArgumentException("이미 존재하는 계정 이메일 입니다.")
+            throw AccountEmailExistsException()
         }
     }
 }
