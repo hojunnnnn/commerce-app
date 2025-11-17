@@ -1,8 +1,16 @@
 rootProject.name = "ecommerce"
 
 include(
+    // inbound - web
     "core-api",
+
+    // application
     "core-app",
+
+    // domain
     "core-domain",
-    "core-infra",
+
+    // outbound - infra
+    "core-infra:auth",
+    "core-infra:jpa",
 )
