@@ -1,12 +1,13 @@
 package com.ecommerce.domain.account.vo
 
+import com.ecommerce.domain.account.exception.AccountIdNegativeException
+
 @JvmInline
 value class AccountId(val value: Long) {
 
     init {
         if(value < 0) {
-            throw IllegalArgumentException("계정 ID는 음수일 수 없습니다.")
-
+            throw AccountIdNegativeException()
         }
     }
 

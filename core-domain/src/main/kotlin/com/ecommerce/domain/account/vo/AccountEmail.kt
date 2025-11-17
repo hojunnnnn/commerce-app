@@ -1,11 +1,13 @@
 package com.ecommerce.domain.account.vo
 
+import com.ecommerce.domain.account.exception.AccountInvalidEmailFormatException
+
 @JvmInline
 value class AccountEmail(val value: String) {
 
     init {
         if(!EMAIL_REGEX.matches(value)) {
-            throw IllegalArgumentException("올바르지 않은 이메일 형식입니다.")
+            throw AccountInvalidEmailFormatException()
         }
     }
 

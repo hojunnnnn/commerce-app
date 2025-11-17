@@ -1,5 +1,6 @@
 package com.ecommerce.domain.account.vo
 
+import com.ecommerce.domain.account.exception.AccountInvalidEmailFormatException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,6 +18,6 @@ class AccountEmailTest {
     @ParameterizedTest
     @ValueSource(strings = ["A1_B2ecommerceCom", "test...ecommerce@com"])
     fun `이메일 형식이 아니면 예외가 발생한다`(email : String) {
-        assertThrows<IllegalArgumentException> { AccountEmail(email) }
+        assertThrows<AccountInvalidEmailFormatException> { AccountEmail(email) }
     }
 }

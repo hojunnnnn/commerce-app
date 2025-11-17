@@ -1,11 +1,13 @@
 package com.ecommerce.domain.account.vo
 
+import com.ecommerce.domain.account.exception.AccountInvalidPasswordLengthException
+
 @JvmInline
 value class AccountPassword(val value: String) {
 
     init {
         if(value.length !in MIN_LENGTH..MAX_LENGTH) {
-            throw IllegalArgumentException("계정 비밀번호는 ${MIN_LENGTH} ~ ${MAX_LENGTH}자 이내로 작성되어야 합니다.")
+            throw AccountInvalidPasswordLengthException()
         }
     }
 

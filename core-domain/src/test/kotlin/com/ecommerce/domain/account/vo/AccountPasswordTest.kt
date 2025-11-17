@@ -1,5 +1,6 @@
 package com.ecommerce.domain.account.vo
 
+import com.ecommerce.domain.account.exception.AccountInvalidPasswordLengthException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,7 +22,7 @@ class AccountPasswordTest {
     fun `비밀번호가 8자 미만 또는 100자 초과인 경우 예외가 발생한다`(count: Int) {
         val password = "a".repeat(count)
 
-        assertThrows<IllegalArgumentException> { AccountPassword(password) }
+        assertThrows<AccountInvalidPasswordLengthException> { AccountPassword(password) }
     }
 
 }
