@@ -2,6 +2,7 @@ dependencies {
     runtimeOnly(project(":core-infra:jpa")) // SpringBoot가 Bean을 스캔할 수 있도록
 
     implementation(project(":core-app"))
+    implementation(project(":core-domain"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")

@@ -1,5 +1,6 @@
 package com.ecommerce.api.account
 
+import com.ecommerce.api.response.ResultType
 import com.ecommerce.api.security.SecurityConfig
 import com.ecommerce.app.account.port.`in`.SignupResult
 import com.ecommerce.app.account.port.`in`.SignupUseCase
@@ -49,8 +50,11 @@ class AccountControllerTest {
 
         resultActions.andExpect {
             status { isOk() }
-            jsonPath("$.email") { value(result.email) }
-            jsonPath("$.name") { value(result.name) }
+            jsonPath("$.result") { value(ResultType.SUCCESS.name) }
+            jsonPath("$.status") { value(200) }
+            jsonPath("$.data.email") { value(request.email) }
+            jsonPath("$.data.name") { value(request.name) }
+            jsonPath("$.error") { value(null) }
         }
     }
 
