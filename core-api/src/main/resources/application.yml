@@ -1,18 +1,8 @@
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:ecommerce
-    username: sa
-    password:
+server:
+  port: 35710
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
+spring:
+  config:
+    import:
+      - classpath:app/infra-db.yml
+      - classpath:app/infra-auth.yml
