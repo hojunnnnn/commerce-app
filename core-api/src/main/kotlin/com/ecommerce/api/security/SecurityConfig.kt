@@ -17,22 +17,19 @@ class SecurityConfig {
             .csrf { it.disable() }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) } // 세션 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
             .authorizeHttpRequests { authorize ->
                 authorize
                     .requestMatchers(
                         "/",
                         "/health",
                         "/api/v1/accounts/signup",
+                        "/api/v1/auth/login",
                         "/h2-console/**"
                     )
                     .permitAll()
                     .anyRequest().authenticated()
             }
-//            .authorizeHttpRequests {
-//                it.requestMatchers("/","/health","/api/v1/accounts/signup","/h2-console/**").permitAll()
-//                it.anyRequest().authenticated()
-//            }
             .headers { header -> header.frameOptions { it.sameOrigin() } }
 
         return http.build()

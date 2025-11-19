@@ -1,32 +1,15 @@
 package com.ecommerce.api.account
 
 import com.ecommerce.api.response.ResultType
-import com.ecommerce.api.security.SecurityConfig
+import com.ecommerce.api.support.AbstractWebMvcTest
 import com.ecommerce.app.account.port.`in`.SignupResult
-import com.ecommerce.app.account.port.`in`.SignupUseCase
-import com.google.gson.Gson
-import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 
-@WebMvcTest(AccountController::class)
-@Import(SecurityConfig::class)
-class AccountControllerTest {
+class AccountControllerTest : AbstractWebMvcTest() {
 
-    @Autowired
-    private lateinit var mockMvc: MockMvc
-
-    @Autowired
-    private lateinit var gson: Gson
-
-    @MockkBean
-    private lateinit var signupUseCase: SignupUseCase
 
     @Test
     fun `회원가입 성공`() {

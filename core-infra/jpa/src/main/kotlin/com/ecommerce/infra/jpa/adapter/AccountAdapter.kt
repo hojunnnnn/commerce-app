@@ -22,6 +22,10 @@ class AccountAdapter(
         return accountJpaRepository.findByIdOrNull(id)?.let { AccountMapper.toDomain(it) }
     }
 
+    override fun findByEmail(email: String): Account? {
+        return accountJpaRepository.findByEmail(email)?.let { AccountMapper.toDomain(it) }
+    }
+
     override fun existsByEmail(email: String): Boolean {
         return accountJpaRepository.existsByEmail(email)
     }

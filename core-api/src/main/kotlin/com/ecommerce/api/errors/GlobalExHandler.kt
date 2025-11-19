@@ -2,6 +2,8 @@ package com.ecommerce.api.errors
 
 import com.ecommerce.api.response.ApiResponse
 import com.ecommerce.app.account.service.exception.AccountEmailExistsException
+import com.ecommerce.app.account.service.exception.AccountNotFoundException
+import com.ecommerce.app.auth.service.exception.PasswordMisMatchException
 import com.ecommerce.domain.CoreException
 import com.ecommerce.domain.account.exception.AccountIdNegativeException
 import com.ecommerce.domain.account.exception.AccountInvalidEmailFormatException
@@ -20,12 +22,16 @@ class GlobalExHandler: ResponseEntityExceptionHandler() {
     fun handle(ex: CoreException, request: HttpServletRequest): ResponseEntity<ApiResponse<Any>> {
         logWarn(request, ex)
         val errorType = when (ex) {
+            is PasswordMisMatchException -> ErrorType.Auth.PASSWORD_MISMATCH
+
             is AccountEmailExistsException ->ErrorType.Account.EMAIL_ALREADY_EXISTS
+            is AccountNotFoundException -> ErrorType.Account.NOT_FOUND
             is AccountIdNegativeException,
             is AccountInvalidEmailFormatException,
             is AccountInvalidPasswordLengthException,
             is AccountNameBlankException
                 -> ErrorType.Account.INVALID_INPUT_VALUE
+
 
             else -> ErrorType.Base.INTERNAL_SERVER_ERROR
         }

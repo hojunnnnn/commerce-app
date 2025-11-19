@@ -1,5 +1,6 @@
 dependencies {
-    runtimeOnly(project(":core-infra:jpa")) // SpringBoot가 Bean을 스캔할 수 있도록
+    runtimeOnly(project(":core-infra:jpa"))
+    runtimeOnly(project(":core-infra:auth"))
 
     implementation(project(":core-app"))
     implementation(project(":core-domain"))
