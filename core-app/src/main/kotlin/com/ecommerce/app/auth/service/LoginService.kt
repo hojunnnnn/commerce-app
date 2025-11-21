@@ -23,7 +23,7 @@ class LoginService(
             throw PasswordMisMatchException()
         }
 
-        val token = tokenProvider.generateToken(account.email.value)
+        val token = tokenProvider.generateToken(account.id.value.toString())
 
         return LoginResult(
             id = account.id.value,

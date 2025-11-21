@@ -22,8 +22,10 @@ class GlobalExHandler: ResponseEntityExceptionHandler() {
     fun handle(ex: CoreException, request: HttpServletRequest): ResponseEntity<ApiResponse<Any>> {
         logWarn(request, ex)
         val errorType = when (ex) {
+            // Auth
             is PasswordMisMatchException -> ErrorType.Auth.PASSWORD_MISMATCH
 
+            // Account
             is AccountEmailExistsException ->ErrorType.Account.EMAIL_ALREADY_EXISTS
             is AccountNotFoundException -> ErrorType.Account.NOT_FOUND
             is AccountIdNegativeException,

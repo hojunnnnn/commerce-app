@@ -11,8 +11,11 @@ class AccountAccessor(
 ) {
 
     @Transactional(readOnly = true)
-    fun readByEmail(email: String) = accountRepository.findByEmail(email)
+    fun readById(id: Long) = accountRepository.findById(id)
         ?: throw AccountNotFoundException()
 
+    @Transactional(readOnly = true)
+    fun readByEmail(email: String) = accountRepository.findByEmail(email)
+        ?: throw AccountNotFoundException()
 
 }
