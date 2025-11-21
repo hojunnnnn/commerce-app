@@ -44,7 +44,7 @@ class SecurityConfig(
                     .anyRequest().authenticated()
             }
             .headers { header -> header.frameOptions { it.sameOrigin() } }
-            .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterAt(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }

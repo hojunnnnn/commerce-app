@@ -8,6 +8,10 @@ class AuthenticationToken(
     private val authorities: Collection<GrantedAuthority> = emptyList(),
 ): AbstractAuthenticationToken(authorities) {
 
+    init {
+        isAuthenticated = true
+    }
+
     override fun getPrincipal(): AccountPrincipal = accountPrincipal
 
     override fun getCredentials(): Any? = null
