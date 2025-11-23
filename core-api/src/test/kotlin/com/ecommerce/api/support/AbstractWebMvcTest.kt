@@ -4,7 +4,9 @@ import com.ecommerce.api.account.AccountController
 import com.ecommerce.api.auth.AuthController
 import com.ecommerce.api.security.SecurityConfig
 import com.ecommerce.app.account.port.`in`.SignupUseCase
+import com.ecommerce.app.auth.port.`in`.GetAccountInfoUseCase
 import com.ecommerce.app.auth.port.`in`.LoginUseCase
+import com.ecommerce.app.auth.port.out.TokenProvider
 import com.google.gson.Gson
 import com.ninjasquad.springmockk.MockkBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,6 +35,12 @@ abstract class AbstractWebMvcTest {
     protected lateinit var signupUseCase: SignupUseCase
 
     @MockkBean
+    protected lateinit var getAccountInfoUseCase: GetAccountInfoUseCase
+
+    @MockkBean
     protected lateinit var loginUseCase: LoginUseCase
+
+    @MockkBean
+    protected lateinit var tokenProvider: TokenProvider
 
 }
