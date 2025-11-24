@@ -2,20 +2,16 @@ package com.ecommerce.api.support
 
 import com.ecommerce.api.account.AccountController
 import com.ecommerce.api.auth.AuthController
-import com.ecommerce.api.security.SecurityConfig
 import com.ecommerce.app.account.port.`in`.SignupUseCase
 import com.ecommerce.app.auth.port.`in`.GetAccountInfoUseCase
 import com.ecommerce.app.auth.port.`in`.LoginUseCase
-import com.ecommerce.app.auth.port.out.TokenProvider
 import com.google.gson.Gson
 import com.ninjasquad.springmockk.MockkBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 
 
-@Import(SecurityConfig::class)
 @WebMvcTest(
     value = [
         AccountController::class,
@@ -40,7 +36,5 @@ abstract class AbstractWebMvcTest {
     @MockkBean
     protected lateinit var loginUseCase: LoginUseCase
 
-    @MockkBean
-    protected lateinit var tokenProvider: TokenProvider
 
 }
