@@ -1,5 +1,5 @@
 server:
-  port: 35710
+  port: 8082
 
 spring:
   config:
