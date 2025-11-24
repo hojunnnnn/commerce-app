@@ -8,21 +8,22 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.util.AntPathMatcher
 import org.springframework.web.filter.OncePerRequestFilter
 
 class TokenAuthenticationFilter(
     private val tokenProvider: TokenProvider,
     private val getAccountInfoUseCase: GetAccountInfoUseCase,
+    private val allowListPatterns: Collection<String>,
 ): OncePerRequestFilter() {
+
+    private val pathMatcher = AntPathMatcher()
+
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val requestUri = request.requestURI
-        val allowPatterns = listOf(
-            "/api/v1/auth/login",
-            "/api/v1/accounts/signup",
-            "/api/v1/accounts/me",
-        )
-        return allowPatterns.any { pattern -> pattern == requestUri }
+        return allowListPatterns.any { pattern -> pathMatcher.match(pattern, requestUri) }
     }
+
 
     override fun doFilterInternal(
         request: HttpServletRequest,

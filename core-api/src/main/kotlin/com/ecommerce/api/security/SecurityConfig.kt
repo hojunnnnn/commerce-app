@@ -20,9 +20,16 @@ class SecurityConfig(
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        val tokenAllowListPatterns = listOf(
+            "/docs/**",
+            "/h2-console/**",
+            "/api/v1/accounts/signup",
+            "/api/v1/auth/login",
+        )
         val tokenAuthenticationFilter = TokenAuthenticationFilter(
             tokenProvider = tokenProvider,
             getAccountInfoUseCase = getAccountInfoUseCase,
+            allowListPatterns = tokenAllowListPatterns
         )
 
 
@@ -33,18 +40,11 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) } // 세션 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers(
-                        "/",
-                        "/health",
-                        "/api/v1/accounts/signup",
-                        "/api/v1/auth/login",
-                        "/h2-console/**"
-                    )
-                    .permitAll()
+                    .requestMatchers(* tokenAllowListPatterns.toTypedArray()).permitAll()
                     .anyRequest().authenticated()
             }
             .headers { header -> header.frameOptions { it.sameOrigin() } }
-            .addFilterAt(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
