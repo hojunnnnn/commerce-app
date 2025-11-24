@@ -27,10 +27,3 @@ openapi3 {
     format = "yaml"
     outputDirectory = "src/main/resources/static/docs"
 }
-
-tasks.register<Copy>("copyOasToSwagger") {
-    delete("src/main/resources/static/docs/openapi3.yaml") // 기존 OAS 파일 삭제
-    from(layout.buildDirectory.file("api-spec/openapi3.yaml")) // 복제할 OAS 파일 지정
-    into("src/main/resources/static/docs/.") // 타겟 디렉터리로 파일 복제
-    dependsOn("openapi3") // openapi3 Task가 먼저 실행되도록 설정
-}
