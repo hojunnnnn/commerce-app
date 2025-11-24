@@ -112,19 +112,50 @@ class AccountControllerTest : AbstractWebMvcTest() {
 
         every { signupUseCase.signup(any()) } throws AccountInvalidEmailFormatException()
 
-        val resultActions =
-            mockMvc.post("/api/v1/accounts/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = gson.toJson(request)
-            }
+        val result = mockMvc.perform(
+            RestDocumentationRequestBuilders
+                .post("/api/v1/accounts/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(request))
+        )
+        result.andExpectAll(
+            status().isBadRequest(),
+            jsonPath("$.result").value(ResultType.ERROR.name),
+            jsonPath("$.status").value(400),
+            jsonPath("$.data").value(null),
+            jsonPath("$.error.message").value("입력 값이 유효하지 않습니다.")
+        )
 
-        resultActions.andExpect {
-            status { isBadRequest() }
-            jsonPath("$.result") { value(ResultType.ERROR.name) }
-            jsonPath("$.status") { value(400) }
-            jsonPath("$.data") { value(null) }
-            jsonPath("$.error.message") { value("입력 값이 유효하지 않습니다.") }
-        }
+        result.andDo(MockMvcRestDocumentationWrapper.document(
+            "회원가입 - 실패 - 잘못된 입력값",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            resource(
+                ResourceSnippetParameters.builder()
+                    .tag("Account")
+                    .requestSchema(Schema("SignupRequest"))
+                    .requestFields(
+                        *listOf(
+                            fieldWithPath("email").type(JsonFieldType.STRING).description("계정 이메일"),
+                            fieldWithPath("password").type(JsonFieldType.STRING).description("계정 비밀번호"),
+                            fieldWithPath("name").type(JsonFieldType.STRING).description("계정 이름")
+                        ).toTypedArray()
+                    )
+                    .responseSchema(Schema("ApiResponse<Unit>"))
+                    .responseFields(
+                        *listOf(
+                            fieldWithPath("result").type(JsonFieldType.STRING).description("요청 결과 (SUCCESS/ERROR)"),
+                            fieldWithPath("status").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                            fieldWithPath("data").type(JsonFieldType.NULL).description("결과 데이터 (실패 시 null)"),
+                            fieldWithPath("error").type(JsonFieldType.OBJECT).description("오류 정보"),
+                            fieldWithPath("error.message").type(JsonFieldType.STRING).description("오류 메시지"),
+                            fieldWithPath("error.data").type(JsonFieldType.NULL).optional().description("오류 데이터 (없을 경우 null)"),
+                            fieldWithPath("timestamp").type(JsonFieldType.STRING).description("응답 생성 시간")
+                        ).toTypedArray()
+                    )
+                    .build()
+            )
+        ))
     }
 
     @Test
@@ -137,19 +168,43 @@ class AccountControllerTest : AbstractWebMvcTest() {
 
         every { signupUseCase.signup(any()) } throws AccountEmailExistsException()
 
-        val resultActions =
-            mockMvc.post("/api/v1/accounts/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = gson.toJson(request)
-            }
+        val result = mockMvc.perform(
+            RestDocumentationRequestBuilders
+                .post("/api/v1/accounts/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(request))
+        )
 
-        resultActions.andExpect {
-            status { isBadRequest() }
-            jsonPath("$.result") { value(ResultType.ERROR.name) }
-            jsonPath("$.status") { value(400) }
-            jsonPath("$.data") { value(null) }
-            jsonPath("$.error.message") { value("이미 사용 중인 이메일입니다.") }
-        }
+        result.andDo(MockMvcRestDocumentationWrapper.document(
+        "회원가입 - 실패 - 이미 사용 중인 이메일",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        resource(
+            ResourceSnippetParameters.builder()
+                .tag("Account")
+                .requestSchema(Schema("SignupRequest"))
+                .requestFields(
+                    *listOf(
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("계정 이메일"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("계정 비밀번호"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("계정 이름")
+                    ).toTypedArray()
+                )
+                .responseSchema(Schema("ApiResponse<Unit>"))
+                .responseFields(
+                    *listOf(
+                        fieldWithPath("result").type(JsonFieldType.STRING).description("요청 결과 (SUCCESS/ERROR)"),
+                        fieldWithPath("status").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                        fieldWithPath("data").type(JsonFieldType.NULL).description("결과 데이터 (실패 시 null)"),
+                        fieldWithPath("error").type(JsonFieldType.OBJECT).description("오류 정보"),
+                        fieldWithPath("error.message").type(JsonFieldType.STRING).description("오류 메시지"),
+                        fieldWithPath("error.data").type(JsonFieldType.NULL).optional().description("오류 데이터 (없을 경우 null)"),
+                        fieldWithPath("timestamp").type(JsonFieldType.STRING).description("응답 생성 시간")
+                    ).toTypedArray()
+                )
+                .build()
+            )
+        ))
 
     }
 
@@ -168,20 +223,52 @@ class AccountControllerTest : AbstractWebMvcTest() {
 
         every { signupUseCase.signup(any()) } returns result
 
-        val resultActions =
-            mockMvc.post("/api/v1/accounts/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = gson.toJson(request)
-            }
 
-        resultActions.andExpect {
-            status { isOk() }
-            jsonPath("$.result") { value(ResultType.SUCCESS.name) }
-            jsonPath("$.status") { value(200) }
-            jsonPath("$.data.email") { value(request.email) }
-            jsonPath("$.data.name") { value(request.name) }
-            jsonPath("$.error") { value(null) }
-        }
+        val resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("/api/v1/accounts/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(request))
+        )
+
+        resultActions.andExpectAll(
+            status().isOk(),
+            jsonPath("$.result").value(ResultType.SUCCESS.name),
+            jsonPath("$.status").value(200),
+            jsonPath("$.data.email").value(request.email),
+            jsonPath("$.data.name").value(request.name),
+            jsonPath("$.error").value(null),
+        )
+
+        resultActions.andDo(MockMvcRestDocumentationWrapper.document(
+            "회원가입 - 성공",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            resource(
+                ResourceSnippetParameters.builder()
+                    .tag("Account")
+                    .summary("회원가입")
+                    .description("회원가입 API")
+                    .requestSchema(Schema("SignupRequest"))
+                    .requestFields(
+                        *listOf(
+                            fieldWithPath("email").type(JsonFieldType.STRING).description("계정 이메일"),
+                            fieldWithPath("password").type(JsonFieldType.STRING).description("계정 비밀번호"),
+                            fieldWithPath("name").type(JsonFieldType.STRING).description("계정 이름")
+                        ).toTypedArray()
+                    )
+                    .responseSchema(Schema("ApiResponse<SignupResult>"))
+                    .responseFields(
+                        *listOf(
+                            fieldWithPath("result").type(JsonFieldType.STRING).description("요청 결과 (SUCCESS/ERROR)"),
+                            fieldWithPath("status").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                            fieldWithPath("error").type(JsonFieldType.NULL).description("오류 정보"),
+                            fieldWithPath("timestamp").type(JsonFieldType.STRING).description("응답 생성 시간"),
+                            fieldWithPath("data.email").type(JsonFieldType.STRING).description("사용자 이메일"),
+                            fieldWithPath("data.name").type(JsonFieldType.STRING).description("사용자 이름")
+                        ).toTypedArray()
+                    )
+                    .build())
+        ))
     }
 
 }
