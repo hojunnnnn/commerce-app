@@ -1,0 +1,73 @@
+openapi: 3.0.1
+info:
+  title: E-Commerce API
+  description: E-Commerce API Documentation
+  version: 1.0.0
+servers:
+- url: http://localhost:8082/
+tags: []
+paths:
+  /api/v1/accounts/me:
+    get:
+      tags:
+      - Account
+      summary: 내 계정 정보 조회
+      description: 내 계정 정보 조회 API
+      operationId: 내 계정 정보 조회 - 성공
+      parameters:
+      - name: Authorization
+        in: header
+        description: "인증 토큰 (Bearer {access-token})"
+        required: true
+        schema:
+          type: string
+        example: Bearer thisismocktoken
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse<AccountInfo>'
+              examples:
+                내 계정 정보 조회 - 성공:
+                  value: "{\r\n  \"result\" : \"SUCCESS\",\r\n  \"status\" : 200,\r\
+                    \n  \"data\" : {\r\n    \"id\" : 1,\r\n    \"email\" : \"test@ecommerce.com\"\
+                    ,\r\n    \"name\" : \"testUser\"\r\n  },\r\n  \"error\" : null,\r\
+                    \n  \"timestamp\" : \"2025-11-24T05:49:11.141191900Z\"\r\n}"
+components:
+  schemas:
+    ApiResponse<AccountInfo>:
+      title: ApiResponse<AccountInfo>
+      required:
+      - error
+      - result
+      - status
+      - timestamp
+      type: object
+      properties:
+        result:
+          type: string
+          description: 요청 결과 (SUCCESS/ERROR)
+        data:
+          required:
+          - email
+          - id
+          - name
+          type: object
+          properties:
+            name:
+              type: string
+              description: 계정 이름
+            id:
+              type: number
+              description: 계정 고유 아이디
+            email:
+              type: string
+              description: 계정 이메일
+        timestamp:
+          type: string
+          description: 응답 생성 시간
+        status:
+          type: number
+          description: HTTP 상태 코드
