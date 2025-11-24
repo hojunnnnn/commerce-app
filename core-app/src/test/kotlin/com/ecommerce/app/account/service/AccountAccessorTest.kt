@@ -19,4 +19,11 @@ class AccountAccessorTest {
         assertThrows<AccountNotFoundException> { accountAccessor.readByEmail("notExists@gmail.com") }
     }
 
+    @Test
+    fun `아이디로 계정을 조회할 수 없으면 예외가 발생한다`() {
+        every { accountRepository.findById(any()) } returns null
+
+        assertThrows<AccountNotFoundException> { accountAccessor.readById(1) }
+    }
+
 }
