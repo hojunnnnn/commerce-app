@@ -34,7 +34,7 @@ paths:
                   value: "{\r\n  \"result\" : \"SUCCESS\",\r\n  \"status\" : 200,\r\
                     \n  \"data\" : {\r\n    \"id\" : 1,\r\n    \"email\" : \"test@ecommerce.com\"\
                     ,\r\n    \"name\" : \"testUser\"\r\n  },\r\n  \"error\" : null,\r\
-                    \n  \"timestamp\" : \"2025-11-24T07:40:44.262945700Z\"\r\n}"
+                    \n  \"timestamp\" : \"2025-11-24T08:16:17.016142700Z\"\r\n}"
   /api/v1/accounts/signup:
     post:
       tags:
@@ -69,7 +69,7 @@ paths:
                   value: "{\r\n  \"result\" : \"SUCCESS\",\r\n  \"status\" : 200,\r\
                     \n  \"data\" : {\r\n    \"email\" : \"test@test.com\",\r\n   \
                     \ \"name\" : \"testUser\"\r\n  },\r\n  \"error\" : null,\r\n \
-                    \ \"timestamp\" : \"2025-11-24T07:40:45.303944600Z\"\r\n}"
+                    \ \"timestamp\" : \"2025-11-24T08:16:18.290145Z\"\r\n}"
         "400":
           description: "400"
           content:
@@ -81,14 +81,87 @@ paths:
                   value: "{\r\n  \"result\" : \"ERROR\",\r\n  \"status\" : 400,\r\n\
                     \  \"data\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"\
                     이미 사용 중인 이메일입니다.\",\r\n    \"data\" : null\r\n  },\r\n  \"timestamp\"\
-                    \ : \"2025-11-24T07:40:45.252941800Z\"\r\n}"
+                    \ : \"2025-11-24T08:16:18.219142300Z\"\r\n}"
                 회원가입 - 실패 - 잘못된 입력값:
                   value: "{\r\n  \"result\" : \"ERROR\",\r\n  \"status\" : 400,\r\n\
                     \  \"data\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"\
                     입력 값이 유효하지 않습니다.\",\r\n    \"data\" : null\r\n  },\r\n  \"timestamp\"\
-                    \ : \"2025-11-24T07:40:45.195942400Z\"\r\n}"
+                    \ : \"2025-11-24T08:16:18.146141800Z\"\r\n}"
+  /api/v1/auth/login:
+    post:
+      tags:
+      - Auth
+      summary: 로그인
+      description: 로그인 API
+      operationId: '로그인 - '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              로그인 - 성공:
+                value: "{\r\n  \"email\" : \"test@ecommerce.com\",\r\n  \"password\"\
+                  \ : \"testpassword\"\r\n}"
+              로그인 - 실패 - 비밀번호 불일치:
+                value: "{\r\n  \"email\" : \"test@ecommerce.com\",\r\n  \"password\"\
+                  \ : \"testpassword\"\r\n}"
+              로그인 - 실패 - 존재하지 않는 계정:
+                value: "{\r\n  \"email\" : \"test@ecommerce.com\",\r\n  \"password\"\
+                  \ : \"testpassword\"\r\n}"
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse<LoginResult>'
+              examples:
+                로그인 - 성공:
+                  value: "{\r\n  \"result\" : \"SUCCESS\",\r\n  \"status\" : 200,\r\
+                    \n  \"data\" : {\r\n    \"id\" : 1,\r\n    \"email\" : \"test@ecommerce.com\"\
+                    ,\r\n    \"name\" : \"testUser\",\r\n    \"accessToken\" : \"\
+                    thisistesttoken\"\r\n  },\r\n  \"error\" : null,\r\n  \"timestamp\"\
+                    \ : \"2025-11-24T08:16:18.494144200Z\"\r\n}"
+        "400":
+          description: "400"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse<Unit>'
+              examples:
+                로그인 - 실패 - 비밀번호 불일치:
+                  value: "{\r\n  \"result\" : \"ERROR\",\r\n  \"status\" : 400,\r\n\
+                    \  \"data\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"\
+                    비밀번호가 일치하지 않습니다.\",\r\n    \"data\" : null\r\n  },\r\n  \"timestamp\"\
+                    \ : \"2025-11-24T08:16:18.558142800Z\"\r\n}"
+        "404":
+          description: "404"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse<Unit>'
+              examples:
+                로그인 - 실패 - 존재하지 않는 계정:
+                  value: "{\r\n  \"result\" : \"ERROR\",\r\n  \"status\" : 404,\r\n\
+                    \  \"data\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"\
+                    존재하지 않는 계정입니다.\",\r\n    \"data\" : null\r\n  },\r\n  \"timestamp\"\
+                    \ : \"2025-11-24T08:16:18.617143300Z\"\r\n}"
 components:
   schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: 계정 비밀번호
+        email:
+          type: string
+          description: 계정 이메일
     ApiResponse<SignupResult>:
       title: ApiResponse<SignupResult>
       required:
@@ -175,6 +248,46 @@ components:
             id:
               type: number
               description: 계정 고유 아이디
+            email:
+              type: string
+              description: 계정 이메일
+          description: 응답 데이터
+        timestamp:
+          type: string
+          description: 응답 생성 시간
+        status:
+          type: number
+          description: HTTP 상태 코드
+    ApiResponse<LoginResult>:
+      title: ApiResponse<LoginResult>
+      required:
+      - data
+      - error
+      - result
+      - status
+      - timestamp
+      type: object
+      properties:
+        result:
+          type: string
+          description: 요청 결과 (SUCCESS/ERROR)
+        data:
+          required:
+          - accessToken
+          - email
+          - id
+          - name
+          type: object
+          properties:
+            name:
+              type: string
+              description: 계정 이름
+            id:
+              type: number
+              description: 계정 고유 아이디
+            accessToken:
+              type: string
+              description: 엑세스 토큰
             email:
               type: string
               description: 계정 이메일
