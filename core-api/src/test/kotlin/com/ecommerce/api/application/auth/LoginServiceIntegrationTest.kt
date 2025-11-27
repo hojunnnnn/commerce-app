@@ -1,5 +1,6 @@
 package com.ecommerce.api.application.auth
 
+import com.ecommerce.api.support.AbstractIntegrationTest
 import com.ecommerce.app.account.port.out.AccountRepository
 import com.ecommerce.app.account.service.AccountAccessor
 import com.ecommerce.app.auth.port.`in`.LoginCommand
@@ -9,16 +10,13 @@ import com.ecommerce.app.auth.service.LoginService
 import com.ecommerce.domain.account.Account
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
-class LoginServiceIntegrationTest
-@Autowired constructor(
+class LoginServiceIntegrationTest(
     private val accountAccessor: AccountAccessor,
     private val tokenProvider: TokenProvider,
     private val accountRepository: AccountRepository,
-) {
+): AbstractIntegrationTest() {
+
 
     class FakePasswordEncoder: PasswordEncoder {
         override fun encode(rawPassword: String): String = rawPassword

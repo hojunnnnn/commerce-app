@@ -1,19 +1,16 @@
 package com.ecommerce.api.application.account
 
+import com.ecommerce.api.support.AbstractIntegrationTest
 import com.ecommerce.app.account.port.out.AccountRepository
 import com.ecommerce.app.account.service.GetAccountInfoService
 import com.ecommerce.domain.account.Account
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
-class GetAccountInfoServiceIntegrationTest
-@Autowired constructor(
+class GetAccountInfoServiceIntegrationTest (
     private val getAccountInfoService: GetAccountInfoService,
     private val accountRepository: AccountRepository,
-) {
+): AbstractIntegrationTest() {
 
     @Test
     fun `계정 정보를 조회할 수 있다`() {

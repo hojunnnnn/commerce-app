@@ -13,9 +13,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.google.code.gson:gson:2.13.0")
 
+
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:0.19.4")
+    testImplementation("org.springframework:spring-tx")
 
 }
 
