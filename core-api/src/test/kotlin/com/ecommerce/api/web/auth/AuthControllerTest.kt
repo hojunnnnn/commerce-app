@@ -1,5 +1,6 @@
-package com.ecommerce.api.auth
+package com.ecommerce.api.web.auth
 
+import com.ecommerce.api.auth.LoginRequest
 import com.ecommerce.api.errors.ErrorType
 import com.ecommerce.api.response.ResultType
 import com.ecommerce.api.support.AbstractRestDocumentTest
