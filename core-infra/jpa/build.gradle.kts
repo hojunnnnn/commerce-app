@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "2.1.20"
+    id("java-test-fixtures")
 }
 dependencies {
     implementation(project(":core-domain"))
@@ -7,4 +8,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.h2database:h2")
+//    runtimeOnly("com.mysql:mysql-connector-j")
+
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }
