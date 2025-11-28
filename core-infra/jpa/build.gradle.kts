@@ -3,6 +3,7 @@ plugins {
     id("java-test-fixtures")
 }
 dependencies {
+    implementation(project(":core-common"))
     implementation(project(":core-domain"))
     implementation(project(":core-app"))
 

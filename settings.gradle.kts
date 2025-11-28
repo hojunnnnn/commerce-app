@@ -13,4 +13,7 @@ include(
     // outbound - infra
     "core-infra:auth",
     "core-infra:jpa",
+
+    // common
+    "core-common"
 )
