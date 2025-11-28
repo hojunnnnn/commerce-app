@@ -17,7 +17,6 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:0.19.4")
-    testImplementation("org.springframework:spring-tx")
     testImplementation(testFixtures(project(":core-infra:jpa")))
 
 }
