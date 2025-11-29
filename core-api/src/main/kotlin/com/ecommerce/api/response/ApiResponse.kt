@@ -16,7 +16,7 @@ data class ApiResponse<T> private constructor(
 
         fun <T> success(data: T): ApiResponse<T> = ApiResponse(ResultType.SUCCESS, 200, data, null)
 
-        fun <T> error(errorType: ErrorType, errorData: Any? = null): ApiResponse<T> =
+        fun error(errorType: ErrorType, errorData: Any? = null): ApiResponse<Unit> =
             ApiResponse(ResultType.ERROR, errorType.status.value(), null, ErrorMessage(errorType, errorData))
     }
 }

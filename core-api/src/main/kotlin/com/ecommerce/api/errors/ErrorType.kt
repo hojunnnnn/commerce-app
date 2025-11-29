@@ -14,6 +14,14 @@ sealed interface ErrorType {
         INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     }
 
+    enum class Security(
+        override val status: HttpStatus,
+        override val message: String
+    ): ErrorType {
+        UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
+        FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+    }
+
     enum class Account(
         override val status: HttpStatus,
         override val message: String

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class GlobalExHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(CoreException::class)
-    fun handle(ex: CoreException, request: HttpServletRequest): ResponseEntity<ApiResponse<Any>> {
+    fun handle(ex: CoreException, request: HttpServletRequest): ResponseEntity<ApiResponse<Unit>> {
         logWarn(request, ex)
         val errorType = when (ex) {
             // Auth
