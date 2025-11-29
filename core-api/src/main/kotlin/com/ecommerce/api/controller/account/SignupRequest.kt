@@ -1,4 +1,4 @@
-package com.ecommerce.api.account
+package com.ecommerce.api.controller.account
 
 import com.ecommerce.app.account.port.`in`.SignupCommand
 

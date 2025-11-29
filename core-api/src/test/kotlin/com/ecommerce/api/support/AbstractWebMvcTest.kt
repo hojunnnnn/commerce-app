@@ -1,7 +1,7 @@
 package com.ecommerce.api.support
 
-import com.ecommerce.api.account.AccountController
-import com.ecommerce.api.auth.AuthController
+import com.ecommerce.api.controller.account.AccountController
+import com.ecommerce.api.controller.auth.AuthController
 import com.ecommerce.app.account.port.`in`.SignupUseCase
 import com.ecommerce.app.auth.port.`in`.GetAccountInfoUseCase
 import com.ecommerce.app.auth.port.`in`.LoginUseCase

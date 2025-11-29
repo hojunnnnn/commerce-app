@@ -1,4 +1,4 @@
-package com.ecommerce.api.auth
+package com.ecommerce.api.controller.auth
 
 import com.ecommerce.api.response.ApiResponse
 import com.ecommerce.app.auth.port.`in`.LoginResult

@@ -1,6 +1,6 @@
 package com.ecommerce.api.web.account
 
-import com.ecommerce.api.account.SignupRequest
+import com.ecommerce.api.controller.account.SignupRequest
 import com.ecommerce.api.response.ResultType
 import com.ecommerce.api.support.AbstractRestDocumentTest
 import com.ecommerce.api.support.WithMockAccount
