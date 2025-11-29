@@ -22,4 +22,4 @@ class AccountEntity(
 
     @Column(nullable = false)
     val name: String,
-)
+) : BaseEntity()
