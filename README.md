@@ -10,8 +10,8 @@
 - Spring Boot
 - Spring Data JPA
 - Spring Security + JWT
-- RestDocs + Swagger
 - JUnit5 + Mockk
+- RestDocs + Swagger
 - H2 Database (-> MySQL)
 - Redis (TBD)
 - Docker Compose (TBD)
