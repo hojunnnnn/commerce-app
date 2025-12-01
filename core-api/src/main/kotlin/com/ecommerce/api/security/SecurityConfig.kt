@@ -32,6 +32,7 @@ class SecurityConfig(
             tokenProvider = tokenProvider,
             getAccountInfoUseCase = getAccountInfoUseCase,
             allowListPatterns = tokenAllowListPatterns,
+            authenticationEntryPoint = authenticationEntryPoint,
         )
 
         http
