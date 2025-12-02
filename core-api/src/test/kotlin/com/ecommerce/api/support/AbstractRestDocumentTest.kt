@@ -16,6 +16,7 @@ import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.test.web.servlet.ResultActions
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -31,6 +32,9 @@ abstract class AbstractRestDocumentTest : AbstractWebMvcTest() {
             .build()
     }
 
+    protected fun MockHttpServletRequestBuilder.withAuthHeader(): MockHttpServletRequestBuilder {
+        return this.header(HttpHeaders.AUTHORIZATION, "Bearer {access-token}")
+    }
 
     protected fun ResultActions.andDocument(
         identifier: String,

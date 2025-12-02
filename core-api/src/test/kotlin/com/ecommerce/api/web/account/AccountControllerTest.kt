@@ -25,7 +25,6 @@ class AccountControllerTest : AbstractRestDocumentTest() {
     @Test
     @WithMockAccount
     fun `내 계정 정보 조회 성공`() {
-        val mockToken = "thisismocktoken"
         val accountInfo = AccountInfo(
             id = 1L,
             email = "test@ecommerce.com",
@@ -37,7 +36,7 @@ class AccountControllerTest : AbstractRestDocumentTest() {
         val result = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/api/v1/accounts/me")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer $mockToken")
+                .withAuthHeader()
         )
 
         result.andExpectAll(

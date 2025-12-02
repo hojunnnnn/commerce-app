@@ -22,10 +22,30 @@ data class Product(
             description: String,
             costPrice: BigDecimal,
             salesPrice: BigDecimal,
-            status: ProductStatus = ProductStatus.SELLING,
+            status: ProductStatus = ProductStatus.ACTIVE,
         ): Product {
             return Product(
                 id = ProductId.generate(),
+                name = ProductName(name),
+                description = ProductDescription(description),
+                price = ProductPrice(
+                    costPrice = costPrice,
+                    salesPrice = salesPrice
+                ),
+                status = status,
+            )
+        }
+
+        fun reconstruct(
+            id: Long,
+            name: String,
+            description: String,
+            costPrice: BigDecimal,
+            salesPrice: BigDecimal,
+            status: ProductStatus,
+        ): Product {
+            return Product(
+                id = ProductId(id),
                 name = ProductName(name),
                 description = ProductDescription(description),
                 price = ProductPrice(
