@@ -1,7 +1,7 @@
 dependencies {
     implementation(project(":core-app"))
 
-    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
-    implementation("io.jsonwebtoken:jjwt-impl:0.12.3")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.12.3")
+    implementation(rootProject.libs.jjwt.api)
+    implementation(rootProject.libs.jjwt.impl)
+    implementation(rootProject.libs.jjwt.jackson)
 }
