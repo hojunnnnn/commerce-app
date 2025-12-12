@@ -29,3 +29,11 @@ openapi3 {
     format = "yaml"
     outputDirectory = "src/main/resources/static/docs"
 }
+
+tasks.bootJar {
+    enabled = true
+}
+
+tasks.jar {
+    enabled = false
+}
