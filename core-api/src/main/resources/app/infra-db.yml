@@ -1,4 +1,27 @@
 spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/ecommerce_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ecommerce_user
+    password: ecommerce_password
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
   h2:
     console:
       enabled: true
@@ -9,12 +32,6 @@ spring:
     username: sa
     password:
 
-#  todo: testcontainers
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ecommerce?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: appuser
-#    password: apppassword
   jpa:
     hibernate:
       ddl-auto: create
