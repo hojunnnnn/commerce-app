@@ -12,9 +12,9 @@
 - Spring Security + JWT
 - JUnit5 + Mockk
 - RestDocs + Swagger
-- H2 Database (-> MySQL)
+- H2, MySQL
+- Docker Compose
 - Redis (TBD)
-- Docker Compose (TBD)
 - Testcontainers (TBD)
 - Message Queue (TBD)
 
