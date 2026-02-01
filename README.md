@@ -20,6 +20,23 @@
 
 ## 프로젝트 아키텍처
 `api`, `app`, `domain` 모듈은 모두 컴파일 타임에 `infra`에 대한 의존성을 가지지 않으며, `infra`는 `api`의 **런타임 시점**에만 주입됩니다.
+```mermaid 
+graph TD
+    API[core-api] --> APP[core-app]
+    API --> DOMAIN[core-domain]
+
+    API -. runtimeOnly .-> INFRA_AUTH
+    API -. runtimeOnly .-> INFRA_JPA
+    
+    APP --> DOMAIN
+
+    INFRA_AUTH[core-infra-auth] --> APP
+
+    INFRA_JPA[core-infra-jpa] --> APP
+    INFRA_JPA --> DOMAIN
+    INFRA_JPA --> COMMON[core-common]
+
+```
 
 다양한 외부 시스템 연동과 변경에 유연하게 대응할 수 있도록 헥사고날 아키텍처를 적용하여 인프라에 대한 의존성을 최소화 했습니다.
 ```
