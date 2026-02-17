@@ -4,6 +4,8 @@ import com.ecommerce.api.response.ApiResponse
 import com.ecommerce.app.account.service.exception.AccountEmailExistsException
 import com.ecommerce.app.account.service.exception.AccountNotFoundException
 import com.ecommerce.app.auth.service.exception.PasswordMisMatchException
+import com.ecommerce.app.product.service.exception.ProductMismatchInOrderException
+import com.ecommerce.app.product.service.exception.ProductNotFoundException
 import com.ecommerce.domain.CoreException
 import com.ecommerce.domain.account.exception.AccountIdNegativeException
 import com.ecommerce.domain.account.exception.AccountInvalidEmailFormatException
@@ -34,6 +36,9 @@ class GlobalExHandler: ResponseEntityExceptionHandler() {
             is AccountNameBlankException
                 -> ErrorType.Account.INVALID_INPUT_VALUE
 
+            // Product
+            is ProductNotFoundException -> ErrorType.Product.PRODUCT_NOT_FOUND
+            is ProductMismatchInOrderException -> ErrorType.Product.PRODUCT_MISMATCH_IN_ORDER
 
             else -> ErrorType.Base.INTERNAL_SERVER_ERROR
         }

@@ -12,6 +12,7 @@ sealed interface ErrorType {
     ): ErrorType {
         INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내 오류가 발생했습니다."),
         INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
+        NOT_FOUND(HttpStatus.NOT_FOUND, "데이터를 찾을 수 없습니다.")
     }
 
     enum class Security(
@@ -37,6 +38,14 @@ sealed interface ErrorType {
         override val message: String
     ): ErrorType {
         PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+    }
+
+    enum class Product(
+        override val status: HttpStatus,
+        override val message: String
+    ): ErrorType {
+        PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
+        PRODUCT_MISMATCH_IN_ORDER(HttpStatus.BAD_REQUEST, "주문 할 수 없는 상품이 포함되어 있습니다.")
     }
 
 }

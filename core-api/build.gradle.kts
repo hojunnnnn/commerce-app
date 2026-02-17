@@ -16,6 +16,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation(rootProject.libs.epage.restdocs.mockmvc)
+    testImplementation(project(":core-infra:jpa"))
     testImplementation(testFixtures(project(":core-infra:jpa")))
 
 }

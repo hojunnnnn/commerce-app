@@ -12,6 +12,6 @@ value class OrderItemId(val value: Long) {
     }
 
     companion object {
-        fun generate(value: Long): OrderItemId = OrderItemId(value)
+        fun generate(value: Long = 0L): OrderItemId = OrderItemId(value)
     }
 }

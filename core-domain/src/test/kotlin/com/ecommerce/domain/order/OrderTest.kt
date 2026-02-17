@@ -10,11 +10,13 @@ class OrderTest {
     @Test
     fun `주문을 생성할 수 있다`() {
         val orderKey = "order-123"
+        val accountId = 1L
         val name = "주문123"
         val price = BigDecimal(1000)
 
-        val order = Order.create(orderKey, name, price)
+        val order = Order.create(accountId, orderKey, name, price)
 
+        assertThat(order.accountId.value).isEqualTo(accountId)
         assertThat(order.orderKey.value).isEqualTo(orderKey)
         assertThat(order.name.value).isEqualTo(name)
         assertThat(order.price.value).isEqualTo(price)
