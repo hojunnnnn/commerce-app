@@ -30,9 +30,9 @@ graph TD
     
     APP --> DOMAIN
 
-    INFRA_AUTH[core-infra-auth] --> APP
+    INFRA_AUTH[core-infra:auth] --> APP
 
-    INFRA_JPA[core-infra-jpa] --> APP
+    INFRA_JPA[core-infra:jpa] --> APP
     INFRA_JPA --> DOMAIN
     INFRA_JPA --> COMMON[core-common]
 
